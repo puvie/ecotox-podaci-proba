@@ -25,7 +25,8 @@ def get_column(table, column_num):
         column.append(row[column_num])
     return column
 
-choice = input("Odaberi koju kolonu da prikazem: 'cas', 'analiza', 'ecotox', 'godina', ili 'full' za sve 4: ")
-# get_column mi vraca moju kolonu... inputs['choice'] mi je drugi argument (column_num)... 
-# prvi argument mi je tabela
-print(get_column(whole_table, inputs[choice]))
+while True:
+    choice = input("Odaberi koju kolonu da prikazem: 'cas', 'analiza', 'ecotox', 'godina', ili 'full' za sve 4: ")
+    # get_column mi vraca moju kolonu... inputs['choice'] mi je drugi argument (column_num)... 
+    # prvi argument mi je tabela
+    print(get_column(whole_table, inputs[choice]))
