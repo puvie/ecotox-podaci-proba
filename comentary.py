@@ -1,32 +1,31 @@
 import numpy as np
-
-# 5 puta se ucitava isti file na stari nacin...
-
-#ovako jednom ucitam i koristim ga u memoriji kroz cijelu skrptu
+#ovo je ostalo isto
 whole_table = np.loadtxt('AquaticReport.txt', dtype='str', delimiter='|', skiprows=1)
+#ovdje je dict al i key i value su str, vidjeces kasnie zasto
+my_dict = {
+    'cas' : '0',
+    'ana' : '1',
+    'tox' : '2',
+    'god' : '3'  
+}
 
-#pogledaj dobro razliku izmedju array-a i python dictionary
-#ovo je kao objekat u javascript-u
-inputs = {
-          'full': -1,
-          'cas': 0,
-          'analiza': 1,
-          'ecotox': 2,
-          'godina': 3,
-          }
+x = input('Unesi keyword cas, ana, tox ili god // ili odg. broj (0,1,2,3): ')
+#zbog ovoga ispod moraju oba biti str, pa ih prebacim u int da bi mogao kasnije napraviti kolonu
 
-def get_column(table, column_num):
-    # posto mi je inputs['full'] == -1 onda provjerim ako je manje onda mi vrati sve
-    if column_num < 0:
-        return whole_table
-    # nije idealno... ima boljih nacina izvlacenja kolona odavde ali to ako ti se da sa numpy naci, jos bolje 
-    column = []
-    for row in whole_table:
-        column.append(row[column_num])
-    return column
+# prvi if provjerava je li jedan od keys napisan u input, ako jest, uzima njegov value 
+# i prebacuje ga u int
+if x in my_dict.keys():
+    b = my_dict.get(x)
+    b = np.int(b)
+# drugi if provjerava je li jedan od values napisan u input, ako jest prebacuje taj value u int
+elif x in my_dict.values():
+    x=np.int(x)
+    b=x
+else:
+    print("Nepoznat keyword")
+#ovdje pravim kolonu od date vrijednosti u inputu
+column_filter = whole_table[:, b]
+#for jer printam element po element radi preglednosti
+for element in column_filter:
+    print(element)
 
-while True:
-    choice = input("Odaberi koju kolonu da prikazem: 'cas', 'analiza', 'ecotox', 'godina', ili 'full' za sve 4: ")
-    # get_column mi vraca moju kolonu... inputs['choice'] mi je drugi argument (column_num)... 
-    # prvi argument mi je tabela
-    print(get_column(whole_table, inputs[choice]))
